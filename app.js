@@ -4,19 +4,35 @@
 
 var kickDrum = new Tone.MembraneSynth().toMaster()
 
-var loopOne = new Tone.Loop(function(time){
+var kickOne = new Tone.Loop(function(time){
 	kickDrum.triggerAttackRelease("C1", "4n", time)
 }, "4n")
 
-document.querySelector('.loop1').addEventListener('change', function(e){
+var kickPart = new Tone.Part(function(time, note){
+	//this shows how to assign division in a specific part
+	kickDrum.triggerAttackRelease(note, "8n", time);
+}, [[0, "C1"], ["0:0:3", "C1"], ["0:1:2", "C1"],["0:2:1","C1"]]);
+
+kickPart.loop = true;
+
+
+document.querySelector('.kick_1').addEventListener('change', function(e){
   if (e.target.checked){
-    loopOne.start(0)
+    kickOne.start(0)
 
   } else {
-    loopOne.stop(0)
+    kickOne.stop(0)
   }
 })
 
+document.querySelector('.kick_2').addEventListener('change', function(e){
+  if (e.target.checked){
+    kickPart.start(0)
+
+  } else {
+    kickPart.stop(0)
+  }
+})
 //snare
 //****************************************************************************
 var snare = new Tone.MetalSynth({
@@ -33,16 +49,16 @@ octaves  : 1.5
 }
 ).toMaster()
 
-var loopFive = new Tone.Loop(function(time){
+var snareOne = new Tone.Loop(function(time){
 	snare.triggerAttackRelease("2n", time)
 }, "2n")
 
-document.querySelector('.snareLoop').addEventListener('change', function(e){
+document.querySelector('.snare_1').addEventListener('change', function(e){
   if (e.target.checked){
-    loopFive.start('0:1')
+    snareOne.start('0:1')
 
   } else {
-    loopFive.stop(0)
+    snareOne.stop(0)
   }
 })
 
@@ -67,16 +83,18 @@ octaves  : 1.5
 }
 ).toMaster()
 
-var loopTwo = new Tone.Loop(function(time){
+hats.volume.value = -20;
+
+var hatsOne = new Tone.Loop(function(time){
 	hats.triggerAttackRelease("8n", time)
 }, "8n")
 
-document.querySelector('.loop2').addEventListener('change', function(e){
+document.querySelector('.hat_1').addEventListener('change', function(e){
   if (e.target.checked){
-    loopTwo.start(0)
+    hatsOne.start(0)
 
   } else {
-    loopTwo.stop(0)
+    hatsOne.stop(0)
   }
 })
 //chord
@@ -85,31 +103,73 @@ document.querySelector('.loop2').addEventListener('change', function(e){
 var polySynth = new Tone.PolySynth(4, Tone.Synth).toMaster();
 
 
-var loopThree = new Tone.Loop(function(time){
-  polySynth.triggerAttackRelease(['C4', 'E4', 'G4', 'B4'], "16n", time)
+var chordOne = new Tone.Loop(function(time){
+  polySynth.triggerAttackRelease(['C4', 'E4', 'G4', 'B4'], "2n", time, 0.24)
 
 }, "1m")
 
-var loopFour = new Tone.Loop(function(time){
-  polySynth.triggerAttackRelease(['D4', 'F4', 'A4', 'C5'], "16n", time)
+var chordTwo = new Tone.Loop(function(time){
+  polySynth.triggerAttackRelease(['D4', 'F4', 'A4', 'C5'], "8n", time, 0.24)
 
 }, "1m")
 
-document.querySelector('.loop3').addEventListener('change', function(e){
+document.querySelector('.chord_1').addEventListener('change', function(e){
   if (e.target.checked){
-    loopThree.start(0)
-    loopFour.start('0:3')
+    chordOne.start(0)
+    chordTwo.start('0:3')
 
   } else {
-    loopThree.stop(0)
-    loopFour.stop(0)
+    chordOne.stop(0)
+    chordTwo.stop(0)
   }
 })
 
-//lead synth, keyboard synths
+//lead/arp
 //##################################################
 
+var arp = new Tone.AMSynth({
+harmonicity  : 3 ,
+detune  : 0 ,
+oscillator  : {
+type  : "sine"
+}  ,
+envelope  : {
+attack  : 0.01 ,
+decay  : 0.01 ,
+sustain  : 1 ,
+release  : 0.5
+}  ,
+modulation  : {
+type  : "square"
+}  ,
+modulationEnvelope  : {
+attack  : 0.5 ,
+decay  : 0 ,
+sustain  : 1 ,
+release  : 0.5
+}
+}
+).toMaster();
 
+arp.volume.value = -16;
+
+
+
+var arpPart = new Tone.Part(function(time, note){
+	//this shows how to assign division in a specific part
+	arp.triggerAttackRelease(note, "8n", time);
+}, [[0, "C5"], ["0:0:2", "E5"], ["0:1", "C5"],["0:1:2","E5"],["0:2","C5"],["0:2:2","E5"],["0:3","B5"],["0:3:2","G5"]]);
+
+arpPart.loop = true;
+
+document.querySelector('.arp_1').addEventListener('change', function(e){
+  if (e.target.checked){
+    arpPart.start(0)
+
+  } else {
+    arpPart.stop(0)
+  }
+})
 
 
 //Play slash pause. actually really activates global transport
