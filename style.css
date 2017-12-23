@@ -1,0 +1,25 @@
+body {
+  background-color: #000000;
+  color: #ffffff
+
+}
+
+label {
+  font-family: 'Abel', sans-serif;
+  color: #ffffff;
+}
+
+.header_img {
+  height: 150px;
+  width: 150px;
+}
+
+#start {
+  border: 2px;
+  border-color: #ffffff;
+}
+
+.container {
+  border: 1px;
+  border-color: #ffffff;
+}
