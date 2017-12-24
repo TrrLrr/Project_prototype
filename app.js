@@ -21,6 +21,8 @@ document.querySelector('.global_transport').addEventListener('change', function(
 
 var kickDrum = new Tone.MembraneSynth().toMaster()
 
+
+
 var kickOne = new Tone.Loop(function(time){
 	kickDrum.triggerAttackRelease("C1", "4n", time)
 }, "4n")
@@ -131,7 +133,7 @@ document.querySelector('.hat_2').addEventListener('change', function(e){
 //chord
 //####################################################################
 
-var polySynth = new Tone.PolySynth(4, Tone.Synth).toMaster();
+var polySynth = new Tone.PolySynth(4, Tone.Synth).toMaster()
 
 
 var chordOne = new Tone.Loop(function(time){
@@ -180,7 +182,7 @@ sustain  : 1 ,
 release  : 0.5
 }
 }
-).toMaster();
+).toMaster()
 
 arp.volume.value = -16;
 
@@ -229,6 +231,7 @@ release  : 0.5
 }
 ).toMaster();
 
+
 bass.volume.value = 10;
 
 var bassPart = new Tone.Part(function(time, note){
@@ -251,17 +254,9 @@ document.querySelector('.bass_1').addEventListener('change', function(e){
 })
 //volume volume node
 //###################################################################
-var vol = new Tone.Volume().toMaster()
-//kickDrum.chain(vol, Tone.Master);
-//snare.chain(vol, Tone.Master);
-//hats.chain(vol, Tone.Master);
-//polySynth.chain(vol, Tone.Master);
-//arp.chain(vol, Tone.Master);
-//bass.chain(vol, Tone.Master);
 
-document.querySelector('#global_volume').addEventListener('input', function(e){
-	vol.value = parseInt(e.target.value)
-})
+
+
 
 //bpm slider
 //**************************************
@@ -271,10 +266,10 @@ document.querySelector('#bpm').addEventListener('input', function(e){
 
 //effects
 //######################################################################
+
+
+
+
 document.querySelector('#chord_vol').addEventListener('input', function(e){
 	polySynth.volume.value = parseInt(e.target.value)
-})
-
-document.querySelector('#hat_decay').addEventListener('input', function(e){
-	hats.envelope.decay.value = parseInt(e.target.value)
 })
